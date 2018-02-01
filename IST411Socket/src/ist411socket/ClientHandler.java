@@ -8,12 +8,15 @@ package ist411socket;
 import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -114,6 +117,44 @@ public class ClientHandler {
 
 //                sendResponse(socket, 405, "Method Not Allowed");
                 } //   
+                
+                
+                
+                else if (path.contains("/index.html")) {
+//                        addressView.sendResponse(socket, 200, addressView.getHtml());
+String indexHtmlString= "";
+                    System.out.println("Path received");
+                    out.write("HTTP/1.1 200 OK\n\n");
+                    
+                    
+                    
+                    String tempLine;
+            try {
+                FileReader fin;
+                fin = new FileReader("public/index.html");
+                Scanner scan = new Scanner(fin);
+                while (scan.hasNext()) {
+
+                    tempLine = scan.next();
+
+                    indexHtmlString += tempLine;
+//                    alm.getAddressArrayList().add(AddressModel.deSerializeFromString(tempLine));
+
+                }
+            } catch (FileNotFoundException ex) {
+                System.out.println("index not found");
+            }
+
+                    
+                    
+                    
+                    
+                    out.write(indexHtmlString);
+                    out.write("\n");
+
+//                sendResponse(socket, 405, "Method Not Allowed");
+                } //   
+                
                 else if (path.equals("/list")) {
 //                        addressView.sendResponse(socket, 200, addressView.getHtml());
 
